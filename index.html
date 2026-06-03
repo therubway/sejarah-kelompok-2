@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pemilu pada Era Reformasi</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Variabel Warna */
+        :root {
+            --primary: #D32F2F;
+            --primary-dark: #B71C1C;
+            --white: #FFFFFF;
+            --dark: #212121;
+            --gray: #F5F5F5;
+            --text-light: #757575;
+            --shadow: 0 8px 20px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--gray);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 { color: var(--dark); }
+        h2 { font-size: 2.5rem; text-align: center; margin-bottom: 2rem; position: relative; }
+        h2::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            display: block;
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+        p { margin-bottom: 1rem; color: var(--text-light); }
+        
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        /* Animasi Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-in-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Navbar Sticky */
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--primary); }
+        .nav-links { display: flex; gap: 1.5rem; }
+        .nav-links a {
+            text-decoration: none; color: var(--dark);
+            font-weight: 600; transition: var(--transition);
+        }
+        .nav-links a:hover { color: var(--primary); }
+
+        /* Hero Section */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(245,245,245,0.95) 100%);
+            padding: 0 2rem;
+        }
+        .hero-content h1 { font-size: 4rem; color: var(--primary); margin-bottom: 1rem; }
+        .hero-content p { font-size: 1.2rem; max-width: 800px; margin: 0 auto 2rem; color: var(--dark); font-weight: 400;}
+        .btn-primary {
+            display: inline-block; padding: 12px 30px;
+            background: var(--primary); color: var(--white);
+            text-decoration: none; font-weight: 600; border-radius: 30px;
+            transition: var(--transition); box-shadow: 0 5px 15px rgba(211, 47, 47, 0.4);
+        }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-3px); }
+
+        /* Grid Layout yang Dirapikan */
+        /* Menggunakan align-items: stretch agar tinggi kotak sama semua */
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; align-items: stretch; }
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; align-items: stretch; }
+
+        /* Cards Style Utama */
+        .card {
+            background: var(--white); 
+            padding: 2rem; 
+            border-radius: 15px;
+            box-shadow: var(--shadow); 
+            transition: var(--transition);
+            border-bottom: 4px solid transparent; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            text-align: center;
+            height: 100%; /* Memaksa kotak mengisi ruang grid */
+        }
+        .card:hover { transform: translateY(-10px); border-bottom: 4px solid var(--primary); }
+        .card i { font-size: 2.5rem; color: var(--primary); margin-bottom: 1.2rem; }
+        .card h3, .card h4 { margin-bottom: 1rem; width: 100%; }
+        .card p { flex-grow: 1; margin-bottom: 0; font-size: 0.95rem; } /* Teks merenggang agar rapi */
+
+        /* LUBER JURDIL Cards Khusus */
+        .luber-card {
+            background: var(--white); 
+            padding: 1.5rem; 
+            border-radius: 10px;
+            box-shadow: var(--shadow); 
+            text-align: center; 
+            border: 1px solid #eaeaea;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: flex-start;
+            height: 100%;
+            transition: var(--transition);
+        }
+        .luber-card:hover { box-shadow: 0 10px 25px rgba(0,0,0,0.15); border-color: var(--primary); }
+        .luber-card h4 { color: var(--primary); font-size: 1.2rem; margin-bottom: 0.8rem; }
+        .luber-card p { font-size: 0.9rem; margin-bottom: 0; }
+
+        /* Pro Kontra Grid (Dirapikan) */
+        .pro-kontra-container { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 2rem; 
+            align-items: stretch; 
+        }
+        .pk-box { 
+            background: var(--white); 
+            padding: 2.5rem 2rem; 
+            border-radius: 15px; 
+            box-shadow: var(--shadow); 
+            height: 100%; 
+        }
+        .pro-box { border-top: 5px solid #4CAF50; }
+        .kontra-box { border-top: 5px solid var(--primary); }
+        .pk-list { list-style: none; }
+        .pk-list li { margin-bottom: 15px; display: flex; align-items: flex-start; gap: 12px; font-size: 0.95rem;}
+        .pk-list li i { margin-top: 4px; }
+        .pro-box li i { color: #4CAF50; }
+        .kontra-box li i { color: var(--primary); }
+
+        /* Timeline Interaktif */
+        .timeline { position: relative; max-width: 800px; margin: 0 auto; }
+        .timeline::after {
+            content: ''; position: absolute; width: 4px; background: var(--primary);
+            top: 0; bottom: 0; left: 50%; margin-left: -2px; border-radius: 2px;
+        }
+        .timeline-item { padding: 10px 40px; position: relative; width: 50%; }
+        .timeline-item::after {
+            content: ''; position: absolute; width: 20px; height: 20px;
+            background: var(--white); border: 4px solid var(--primary);
+            border-radius: 50%; top: 15px; z-index: 1;
+        }
+        .left { left: 0; }
+        .right { left: 50%; }
+        .left::after { right: -10px; }
+        .right::after { left: -10px; }
+        .timeline-content {
+            padding: 20px; background: var(--white); position: relative;
+            border-radius: 10px; box-shadow: var(--shadow); transition: var(--transition);
+        }
+        .timeline-content:hover { transform: scale(1.02); }
+        .timeline-content h3 { color: var(--primary); font-size: 1.5rem; }
+        .timeline-content .tokoh { font-weight: bold; color: var(--dark); display: block; margin-top: 10px;}
+
+        /* Fakta & Quote */
+        .fakta-quote {
+            background: var(--primary); color: var(--white); padding: 5rem 2rem; text-align: center;
+        }
+        .fakta-quote h2, .fakta-quote p, .fakta-quote h3 { color: var(--white); }
+        .fakta-quote h2::after { background: var(--white); }
+        .quote-box {
+            font-size: 1.5rem; font-style: italic; max-width: 800px; margin: 2rem auto; position: relative;
+        }
+        .quote-box i { font-size: 3rem; opacity: 0.3; position: absolute; top: -20px; left: -30px;}
+
+        /* Tata Letak Konten Tanpa Gambar */
+        .content-centered { max-width: 900px; margin: 0 auto; }
+
+        /* Responsive */
+        @media screen and (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-content h1 { font-size: 2.5rem; }
+            .timeline::after { left: 31px; }
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .timeline-item.right { left: 0; }
+            .timeline-item::after { left: 21px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="logo">PemiluEraReformasi<span style="color:var(--dark)">.ID</span></div>
+        <div class="nav-links">
+            <a href="#reformasi">Era Reformasi</a>
+            <a href="#pemilu">Mengenal Pemilu</a>
+            <a href="#sistem">Sistem & KPU</a>
+            <a href="#timeline">Timeline</a>
+            <a href="#partisipasi">Partisipasi</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="hero">
+        <div class="hero-content reveal">
+            <h1>Pemilu Era Reformasi</h1>
+            <p>Perubahan dari sistem Otoriter Menuju Demokrasi yang Terbuka.</p>
+            <a href="#reformasi" class="btn-primary">Menu</a>
+        </div>
+    </header>
+
+    <!-- Section Era Reformasi -->
+    <section id="reformasi" class="section-container">
+        <div class="reveal content-centered">
+            <h2>Era Reformasi</h2>
+            <h3 style="text-align: center; margin-bottom: 1rem;">Latar Belakang & Jatuhnya Orde Baru</h3>
+            <p style="text-align: center;">Era reformasi adalah masa transisi besar dalam sejarah politik Indonesia yang dimulai pada tahun 1998. Hal ini dilatarbelakangi oleh <strong>krisis ekonomi 1997–1998</strong> yang melanda Asia, memicu ketidakpuasan publik terhadap pemerintah.</p>
+            <p style="text-align: center;">Puncak dari ketidakpuasan ini adalah gelombang <strong>demonstrasi mahasiswa</strong> besar-besaran di seluruh Indonesia. Tekanan sosial dan politik yang masif akhirnya memaksa <strong>Presiden Soeharto turun dari jabatannya pada 21 Mei 1998</strong> setelah berkuasa selama 32 tahun.</p>
+            
+            <h3 style="text-align: center; margin-top: 3rem; margin-bottom: 1rem;">Tujuan & Dampak bagi Demokrasi</h3>
+            <p style="text-align: center; margin-bottom: 2.5rem;">Reformasi bertujuan untuk menata kembali kehidupan bermasyarakat, berbangsa, dan bernegara berdasarkan Pancasila dan UUD 1945 secara murni. Dampak terbesarnya meliputi:</p>
+            
+            <div class="grid-4">
+                <div class="card">
+                    <i class="fas fa-newspaper"></i>
+                    <h4>Kebebasan Pers</h4>
+                    <p>Media massa tidak lagi dibungkam atau dikontrol ketat oleh negara secara sepihak.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-bullhorn"></i>
+                    <h4>Bebas Berpendapat</h4>
+                    <p>Ruang publik terbuka luas bagi kritik masyarakat terhadap kebijakan pemerintah.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-users"></i>
+                    <h4>Partai Baru</h4>
+                    <p>Munculnya kembali sistem multipartai secara bebas tanpa campur tangan rezim.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-book"></i>
+                    <h4>Amandemen UUD</h4>
+                    <p>Perubahan sistem dasar negara menuju iklim demokrasi yang jauh lebih sehat.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Mengenal Pemilu -->
+    <section id="pemilu" class="section-container" style="background: var(--white); border-radius: 20px; box-shadow: var(--shadow);">
+        <div class="reveal">
+            <h2>Mengenal Pemilu</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem;">Pemilihan Umum (Pemilu) adalah sarana pelaksanaan kedaulatan rakyat yang dilaksanakan secara langsung, umum, bebas, rahasia, jujur, dan adil. Pemilu merupakan pilar utama dari sebuah negara demokrasi.</p>
+            
+            <div class="grid-3">
+                <div class="card">
+                    <i class="fas fa-history"></i>
+                    <h3>Sejarah Singkat</h3>
+                    <p>Pemilu pertama diadakan pada tahun 1955. Setelah sempat didominasi satu kekuatan di era Orde Baru, pemilu pasca-Reformasi kembali menjadi sangat kompetitif dan terbuka.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-bullseye"></i>
+                    <h3>Tujuan & Fungsi</h3>
+                    <p>Bertujuan memilih pemimpin secara damai. Fungsinya sebagai sarana legitimasi politik, pergantian kekuasaan, serta meningkatkan partisipasi rakyat.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-person-booth"></i>
+                    <h3>Jenis Pemilu</h3>
+                    <p>Kini pemilu terbagi menjadi: Pemilu Presiden (Pilpres), Pemilu Legislatif (Pileg) untuk anggota DPR/DPRD/DPD, dan Pilkada untuk Gubernur/Bupati/Walikota.</p>
+                </div>
+            </div>
+
+            <h3 style="text-align: center; margin: 4rem 0 2rem;">Asas Pemilu: LUBER JURDIL</h3>
+            <div class="grid-4">
+                <div class="luber-card">
+                    <h4>Langsung</h4>
+                    <p>Rakyat berhak memberikan suaranya secara langsung tanpa adanya perantara.</p>
+                </div>
+                <div class="luber-card">
+                    <h4>Umum</h4>
+                    <p>Berlaku bagi semua warga negara yang telah memenuhi syarat tanpa diskriminasi.</p>
+                </div>
+                <div class="luber-card">
+                    <h4>Bebas</h4>
+                    <p>Bebas menentukan pilihan sesuai hati nurani, tanpa paksaan dari pihak mana pun.</p>
+                </div>
+                <div class="luber-card">
+                    <h4>Rahasia</h4>
+                    <p>Pilihan dari para pemilih dijamin kerahasiaannya dan tidak akan diketahui siapapun.</p>
+                </div>
+                <div class="luber-card">
+                    <h4>Jujur</h4>
+                    <p>Semua elemen yang terlibat harus bersikap dan bertindak jujur sesuai peraturan.</p>
+                </div>
+                <div class="luber-card">
+                    <h4>Adil</h4>
+                    <p>Mendapat perlakuan yang sama secara adil serta terbebas dari segala bentuk kecurangan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Sistem Pemilu Era Reformasi -->
+    <section id="sistem" class="section-container">
+        <div class="reveal content-centered" style="max-width: 1000px;">
+            <h2>Sistem Pemilu Era Reformasi</h2>
+            <p style="text-align: center; margin-bottom: 3rem;">Pasca Reformasi 1998, Indonesia melakukan perombakan besar terhadap sistem pemilunya untuk memastikan kedaulatan benar-benar ada di tangan rakyat secara transparan.</p>
+            
+            <div class="grid-3">
+                <div class="card">
+                    <i class="fas fa-users-cog"></i>
+                    <h3>Sistem Multipartai</h3>
+                    <p>Kran demokrasi dibuka. Warga negara memiliki kebebasan penuh untuk mendirikan partai politik yang mewakili ideologi dan aspirasi mereka secara luas.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-hand-pointer"></i>
+                    <h3>Pemilu Langsung</h3>
+                    <p>Amandemen UUD memungkinkan rakyat memilih Presiden (mulai 2004) dan Kepala Daerah secara langsung, bukan lagi dipilih melalui perwakilan wakil rakyat.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-laptop-code"></i>
+                    <h3>Modernisasi</h3>
+                    <p>Pemanfaatan teknologi secara berkala seperti rekapitulasi elektronik (Sirekap), transparansi data secara online, dan pengawasan berbasis digital terpadu.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Timeline Pemilu -->
+    <section id="timeline" class="section-container" style="background: var(--white); border-radius: 20px; padding: 4rem 2rem;">
+        <div class="reveal">
+            <h2>Timeline Demokrasi</h2>
+            <p style="text-align: center; margin-bottom: 3rem;">Perjalanan panjang pemilihan umum Indonesia dari tahun 1999 hingga saat ini.</p>
+            
+            <div class="timeline">
+                <div class="timeline-item left reveal">
+                    <div class="timeline-content">
+                        <h3>Pemilu 1999</h3>
+                        <p>Pemilu pertama pasca reformasi yang sangat demokratis. Diikuti oleh 48 partai politik baru.</p>
+                        <span class="tokoh">Transisi B.J. Habibie ➔ Gus Dur ➔ Megawati</span>
+                    </div>
+                </div>
+                <div class="timeline-item right reveal">
+                    <div class="timeline-content">
+                        <h3>Pemilu 2004</h3>
+                        <p>Sejarah baru bagi Indonesia: Pemilihan Presiden secara langsung oleh rakyat pertama kalinya.</p>
+                        <span class="tokoh">Terpilih: Susilo Bambang Yudhoyono (SBY)</span>
+                    </div>
+                </div>
+                <div class="timeline-item left reveal">
+                    <div class="timeline-content">
+                        <h3>Pemilu 2009</h3>
+                        <p>Demokrasi makin stabil. Teknologi perhitungan mulai diperkenalkan dalam tahapan pendataan.</p>
+                        <span class="tokoh">Terpilih: Susilo Bambang Yudhoyono (Periode 2)</span>
+                    </div>
+                </div>
+                <div class="timeline-item right reveal">
+                    <div class="timeline-content">
+                        <h3>Pemilu 2014</h3>
+                        <p>Awal di mana ranah media sosial mulai menjadi platform kampanye yang sangat masif dan dominan.</p>
+                        <span class="tokoh">Terpilih: Joko Widodo</span>
+                    </div>
+                </div>
+                <div class="timeline-item left reveal">
+                    <div class="timeline-content">
+                        <h3>Pemilu 2019</h3>
+                        <p>Pemilu Serentak pertama (Pileg & Pilpres bersamaan). Isu polarisasi hoaks jadi tantangan utama.</p>
+                        <span class="tokoh">Terpilih: Joko Widodo (Periode 2)</span>
+                    </div>
+                </div>
+                <div class="timeline-item right reveal">
+                    <div class="timeline-content">
+                        <h3>Pemilu 2024</h3>
+                        <p>Pemilu serentak terbesar. Peran pemilih pemula (Gen Z dan Milenial) sangat menentukan hasil akhir.</p>
+                        <span class="tokoh">Terpilih: Prabowo Subianto</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Peran KPU -->
+    <section id="kpu" class="section-container">
+        <div class="reveal">
+            <h2>Peran & Tugas KPU</h2>
+            <p style="text-align: center; margin-bottom: 3rem;">Komisi Pemilihan Umum (KPU) adalah lembaga independen negara yang bertugas menyelenggarakan Pemilu.</p>
+            <div class="grid-3">
+                <div class="card">
+                    <i class="fas fa-calendar-check"></i>
+                    <h3>Penyelenggara</h3>
+                    <p>Merencanakan jadwal, tahapan pendaftaran, validasi data, hingga pelaksanaan seluruh proses pemilihan umum.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-box-open"></i>
+                    <h3>Manajemen Logistik</h3>
+                    <p>Mendistribusikan surat suara, kotak suara, formulir, dan perlengkapan lainnya ke seluruh penjuru pelosok negeri.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-calculator"></i>
+                    <h3>Rekapitulasi Suara</h3>
+                    <p>Melakukan rekapitulasi perhitungan hasil suara secara terbuka, transparan, dan berjenjang hingga tingkat nasional.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Partisipasi Masyarakat -->
+    <section id="partisipasi" class="section-container" style="background: var(--white); border-radius: 20px;">
+        <div class="reveal content-centered" style="text-align: center;">
+            <h2>Partisipasi Masyarakat</h2>
+            
+            <div style="margin-bottom: 2.5rem;">
+                <h3 style="margin-bottom: 0.8rem;">Pentingnya Suara Anda</h3>
+                <p>Hak memilih adalah kekuatan tertinggi rakyat dalam negara demokrasi. Partisipasi aktif masyarakat memastikan pemimpin yang terpilih benar-benar mewakili kepentingan publik. Satu suara Anda sangat menentukan arah masa depan bangsa.</p>
+            </div>
+            
+            <div style="margin-bottom: 2.5rem;">
+                <h3 style="margin-bottom: 0.8rem;">Peran Generasi Muda</h3>
+                <p>Pemuda adalah agen perubahan bangsa. Melalui edukasi politik yang baik, generasi muda dapat memilah visi-misi calon secara rasional, bukan emosional semata. Kepedulian anak muda menghindarkan bangsa dari kemunduran politik.</p>
+            </div>
+            
+            <div>
+                <h3 style="margin-bottom: 0.8rem;"><span style="color:var(--primary);">Bahaya Golput</span> & Bijak Bersosial Media</h3>
+                <p>Golput (Golongan Putih atau Tidak Memilih) pada dasarnya adalah menyerahkan masa depan kepada pilihan orang lain. Selain itu, di era demokrasi digital ini, penting untuk <strong>bijak menggunakan media sosial</strong>, rajin melakukan <em>fact-checking</em> (cek fakta), dan tidak menyebarkan berita bohong (hoaks) yang dapat memecah belah keharmonisan bangsa.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Pro & Kontra -->
+    <section id="pro-kontra" class="section-container">
+        <div class="reveal">
+            <h2>Dinamika Pemilu: Pro & Kontra</h2>
+            <div class="pro-kontra-container">
+                <div class="pk-box pro-box">
+                    <h3 style="color: #4CAF50; margin-bottom: 1.5rem; text-align: center;">Keunggulan (Pro)</h3>
+                    <ul class="pk-list">
+                        <li><i class="fas fa-check-circle"></i> Menjadi sarana demokrasi tertinggi bagi suara rakyat.</li>
+                        <li><i class="fas fa-check-circle"></i> Menjamin pergantian kekuasaan secara sah dan konstitusional.</li>
+                        <li><i class="fas fa-check-circle"></i> Memberi kebebasan memilih pemimpin sesuai hati nurani.</li>
+                        <li><i class="fas fa-check-circle"></i> Meningkatkan kesadaran berpolitik di tengah masyarakat.</li>
+                    </ul>
+                </div>
+                <div class="pk-box kontra-box">
+                    <h3 style="color: var(--primary); margin-bottom: 1.5rem; text-align: center;">Tantangan (Kontra)</h3>
+                    <ul class="pk-list">
+                        <li><i class="fas fa-times-circle"></i> Biaya penyelenggaraan negara untuk pemilu sangat mahal.</li>
+                        <li><i class="fas fa-times-circle"></i> Sangat rawan praktik politik uang <em>(Money Politics)</em>.</li>
+                        <li><i class="fas fa-times-circle"></i> Menyebabkan polarisasi tajam dan perpecahan antar pendukung.</li>
+                        <li><i class="fas fa-times-circle"></i> Maraknya kampanye hitam dan persebaran berita palsu.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fakta & Quote -->
+    <section id="fakta-quote" class="fakta-quote">
+        <div class="reveal">
+            <h2>Statistik & Fakta Demokrasi</h2>
+            
+            <div class="grid-3" style="margin: 4rem 0;">
+                <div>
+                    <h3 style="font-size: 3.5rem; margin-bottom: 0;">204+</h3>
+                    <p style="font-size: 1.1rem; font-weight: bold; opacity: 0.9;">Juta Pemilih (2024)</p>
+                </div>
+                <div>
+                    <h3 style="font-size: 3.5rem; margin-bottom: 0;">1955</h3>
+                    <p style="font-size: 1.1rem; font-weight: bold; opacity: 0.9;">Tahun Pemilu Pertama</p>
+                </div>
+                <div>
+                    <h3 style="font-size: 3.5rem; margin-bottom: 0;">>50%</h3>
+                    <p style="font-size: 1.1rem; font-weight: bold; opacity: 0.9;">Pemilih Muda (Gen Z & Milenial)</p>
+                </div>
+            </div>
+            
+            <div class="quote-box">
+                <i class="fas fa-quote-left"></i>
+                <p>"Demokrasi tidak hanya sekadar tentang pemilihan umum, tetapi juga tentang bagaimana cara kita merawat kebebasan dan persatuan setelah kotak suara ditutup."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Kesimpulan -->
+    <section id="kesimpulan" class="section-container" style="text-align: center; margin-bottom: 4rem;">
+        <div class="reveal">
+            <h2>Kesimpulan</h2>
+            <div class="card" style="max-width: 900px; margin: 0 auto; text-align: left; background: var(--white); border-top: 5px solid var(--primary); padding: 3rem;">
+                <p>Reformasi 1998 telah membawa <strong>perubahan besar bagi pilar demokrasi Indonesia</strong>. Sistem kenegaraan yang tertutup pada masa Orde Baru berhasil didobrak menuju sistem pemilu yang jauh lebih <strong>terbuka, kompetitif, dan modern</strong>.</p>
+                <p>Saat ini, <strong>rakyat memiliki hak penuh memilih secara langsung</strong> pemimpin mereka. Teknologi juga sangat memengaruhi perkembangan politik, baik dari segi efisiensi pengerjaan KPU hingga modernisasi cara kampanye di dunia digital.</p>
+                <p>Namun, tantangan seperti politik uang dan persebaran hoaks tetaplah nyata. Oleh karena itu, <strong>demokrasi adalah hal yang harus dijaga bersama</strong>. Pemilu bukan sekadar pesta perayaan lima tahunan semata, melainkan wujud tanggung jawab mutlak warga negara dalam menentukan nasib bangsa.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript Modern -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Navbar Sticky Effect
+            const nav = document.querySelector('nav');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    nav.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)';
+                    nav.style.background = 'rgba(255, 255, 255, 0.98)';
+                } else {
+                    nav.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                    nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                }
+            });
+
+            // Smooth Scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Scroll Reveal Animation 
+            const reveals = document.querySelectorAll(".reveal");
+            const revealOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
+
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) { return; } 
+                    else {
+                        entry.target.classList.add("active");
+                        observer.unobserve(entry.target); 
+                    }
+                });
+            }, revealOptions);
+
+            reveals.forEach(reveal => { revealOnScroll.observe(reveal); });
+        });
+    </script>
+</body>
+</html>
